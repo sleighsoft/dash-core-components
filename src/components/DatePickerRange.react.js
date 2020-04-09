@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component, lazy, Suspense} from 'react';
 import datePickerRange from '../utils/LazyLoader/datePickerRange';
+import moment from 'moment';
 
 const RealDatePickerRange = lazy(datePickerRange);
 
@@ -251,7 +252,7 @@ DatePickerRange.propTypes = {
      * component or the page.
      */
     persisted_props: PropTypes.arrayOf(
-        PropTypes.oneOf(['start_date', 'end_date'])
+        PropTypes.oneOf(['start_date.datePart', 'end_date.datePart'])
     ),
 
     /**
@@ -261,6 +262,45 @@ DatePickerRange.propTypes = {
      * session: window.sessionStorage, data is cleared once the browser quit.
      */
     persistence_type: PropTypes.oneOf(['local', 'session', 'memory']),
+};
+
+DatePickerRange.persistenceTransforms = {
+    end_date: {
+        datePart: {
+            extract: propValue => {
+                if (propValue === null || propValue === undefined) {
+                    //
+                } else {
+                    return moment(propValue)
+                        .startOf('day')
+                        .format();
+                }
+            },
+            apply: propValue => {
+                if (propValue === null || propValue === undefined) {
+                    //
+                } else {
+                    return moment(propValue)
+                        .startOf('day')
+                        .format();
+                }
+            },
+        },
+    },
+    start_date: {
+        datePart: {
+            extract: propValue => {
+                if (propValue === null || propValue === undefined) {
+                    //
+                } else {
+                    return moment(propValue)
+                        .startOf('day')
+                        .format();
+                }
+            },
+            apply: propValue => propValue
+        },
+    },
 };
 
 DatePickerRange.defaultProps = {
@@ -276,7 +316,7 @@ DatePickerRange.defaultProps = {
     clearable: false,
     disabled: false,
     updatemode: 'singledate',
-    persisted_props: ['start_date', 'end_date'],
+    persisted_props: ['start_date.datePart', 'end_date.datePart'],
     persistence_type: 'local',
 };
 
