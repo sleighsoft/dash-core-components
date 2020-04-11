@@ -233,7 +233,7 @@ DatePickerSingle.persistenceTransforms = {
                         .format();
                 }
             },
-            apply: propValue => propValue,
+            apply: storedValue => storedValue,
         },
     },
 };
