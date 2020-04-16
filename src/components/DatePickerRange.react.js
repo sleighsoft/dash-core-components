@@ -252,7 +252,7 @@ DatePickerRange.propTypes = {
      * component or the page.
      */
     persisted_props: PropTypes.arrayOf(
-        PropTypes.oneOf(['start_date.datePart', 'end_date.datePart'])
+        PropTypes.oneOf(['start_date', 'end_date'])
     ),
 
     /**
@@ -266,7 +266,6 @@ DatePickerRange.propTypes = {
 
 DatePickerRange.persistenceTransforms = {
     end_date: {
-        datePart: {
             extract: propValue => {
                 if (propValue === null || propValue === undefined) {
                     //
@@ -285,10 +284,8 @@ DatePickerRange.persistenceTransforms = {
                         .format();
                 }
             },
-        },
     },
     start_date: {
-        datePart: {
             extract: propValue => {
                 if (propValue === null || propValue === undefined) {
                     //
@@ -300,7 +297,6 @@ DatePickerRange.persistenceTransforms = {
             },
             apply: storedValue => storedValue
         },
-    },
 };
 
 DatePickerRange.defaultProps = {
@@ -316,7 +312,7 @@ DatePickerRange.defaultProps = {
     clearable: false,
     disabled: false,
     updatemode: 'singledate',
-    persisted_props: ['start_date.datePart', 'end_date.datePart'],
+    persisted_props: ['start_date', 'end_date'],
     persistence_type: 'local',
 };
 
