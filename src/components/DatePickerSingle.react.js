@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component, lazy, Suspense} from 'react';
 import datePickerSingle from '../utils/LazyLoader/datePickerSingle';
+import moment from 'moment';
 
 const RealDateSingleRange = lazy(datePickerSingle);
 
@@ -209,7 +210,7 @@ DatePickerSingle.propTypes = {
      * component or the page. Since only `date` is allowed this prop can
      * normally be ignored.
      */
-    persisted_props: PropTypes.arrayOf(PropTypes.oneOf(['date'])),
+    persisted_props: PropTypes.arrayOf(PropTypes.oneOf(['date.datePart'])),
 
     /**
      * Where persisted user changes will be stored:
@@ -218,6 +219,23 @@ DatePickerSingle.propTypes = {
      * session: window.sessionStorage, data is cleared once the browser quit.
      */
     persistence_type: PropTypes.oneOf(['local', 'session', 'memory']),
+};
+
+DatePickerSingle.persistenceTransforms = {
+    date: {
+        datePart: {
+            extract: propValue => {
+                if (propValue === null || propValue === undefined) {
+                    //
+                } else {
+                    return moment(propValue)
+                        .startOf('day')
+                        .format();
+                }
+            },
+            apply: storedValue => storedValue,
+        },
+    }
 };
 
 DatePickerSingle.defaultProps = {
@@ -233,7 +251,7 @@ DatePickerSingle.defaultProps = {
     reopen_calendar_on_clear: false,
     clearable: false,
     disabled: false,
-    persisted_props: ['date'],
+    persisted_props: ['date.datePart'],
     persistence_type: 'local',
 };
 
