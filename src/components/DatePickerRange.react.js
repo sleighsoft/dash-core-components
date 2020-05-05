@@ -252,7 +252,7 @@ DatePickerRange.propTypes = {
      * component or the page.
      */
     persisted_props: PropTypes.arrayOf(
-        PropTypes.oneOf(['start_date.datePart', 'end_date.datePart'])
+        PropTypes.oneOf(['start_date', 'end_date'])
     ),
 
     /**
@@ -266,40 +266,36 @@ DatePickerRange.propTypes = {
 
 DatePickerRange.persistenceTransforms = {
     end_date: {
-        datePart: {
-            extract: propValue => {
-                if (propValue === null || propValue === undefined) {
-                    //
-                } else {
-                    return moment(propValue)
-                        .startOf('day')
-                        .format();
-                }
-            },
-            apply: propValue => {
-                if (propValue === null || propValue === undefined) {
-                    //
-                } else {
-                    return moment(propValue)
-                        .startOf('day')
-                        .format();
-                }
-            },
+        extract: propValue => {
+            if (propValue === null || propValue === undefined) {
+                //
+            } else {
+                return moment(propValue)
+                    .startOf('day')
+                    .format();
+            }
+        },
+        apply: propValue => {
+            if (propValue === null || propValue === undefined) {
+                //
+            } else {
+                return moment(propValue)
+                    .startOf('day')
+                    .format();
+            }
         },
     },
     start_date: {
-        datePart: {
-            extract: propValue => {
-                if (propValue === null || propValue === undefined) {
-                    //
-                } else {
-                    return moment(propValue)
-                        .startOf('day')
-                        .format();
-                }
-            },
-            apply: storedValue => storedValue
+        extract: propValue => {
+            if (propValue === null || propValue === undefined) {
+                //
+            } else {
+                return moment(propValue)
+                    .startOf('day')
+                    .format();
+            }
         },
+        apply: storedValue => storedValue,
     },
 };
 
@@ -316,7 +312,7 @@ DatePickerRange.defaultProps = {
     clearable: false,
     disabled: false,
     updatemode: 'singledate',
-    persisted_props: ['start_date.datePart', 'end_date.datePart'],
+    persisted_props: ['start_date', 'end_date'],
     persistence_type: 'local',
 };
 

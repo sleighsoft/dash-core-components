@@ -210,7 +210,7 @@ DatePickerSingle.propTypes = {
      * component or the page. Since only `date` is allowed this prop can
      * normally be ignored.
      */
-    persisted_props: PropTypes.arrayOf(PropTypes.oneOf(['date.datePart'])),
+    persisted_props: PropTypes.arrayOf(PropTypes.oneOf(['date'])),
 
     /**
      * Where persisted user changes will be stored:
@@ -223,19 +223,17 @@ DatePickerSingle.propTypes = {
 
 DatePickerSingle.persistenceTransforms = {
     date: {
-        datePart: {
-            extract: propValue => {
-                if (propValue === null || propValue === undefined) {
-                    //
-                } else {
-                    return moment(propValue)
-                        .startOf('day')
-                        .format();
-                }
-            },
-            apply: storedValue => storedValue,
+        extract: propValue => {
+            if (propValue === null || propValue === undefined) {
+                //
+            } else {
+                return moment(propValue)
+                    .startOf('day')
+                    .format();
+            }
         },
-    }
+        apply: storedValue => storedValue,
+    },
 };
 
 DatePickerSingle.defaultProps = {
@@ -251,7 +249,7 @@ DatePickerSingle.defaultProps = {
     reopen_calendar_on_clear: false,
     clearable: false,
     disabled: false,
-    persisted_props: ['date.datePart'],
+    persisted_props: ['date'],
     persistence_type: 'local',
 };
 
